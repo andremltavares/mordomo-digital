@@ -4,26 +4,35 @@
     <meta charset="UTF-8">
     <title>Mordomo Digital</title>
     <style>
-        body {
-            font-family: sans-serif;
-            padding: 20px;
-        }
-        #button {
+        body { font-family: sans-serif; padding: 20px; display: flex; gap: 30px; }
+        #controls { min-width: 250px; }
+        #output { flex-grow: 1; }
+        button { font-size: 16px; padding: 10px; }
+        h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        #summary, #results { 
+            white-space: pre-wrap; 
+            font-family: monospace; 
+            background-color: #f4f4f4;
             padding: 10px;
-            font-size: 16px;
+            border-radius: 5px;
         }
-        #results {
-            margin-top: 20px;
-            white-space: pre-wrap;
-            font-family: monospace;
-        }
-    </style>    
+    </style>
 </head>
 <body>
-    <h1>🔍 Detetor de Duplicados</h1>
-    <button id="scan-btn">Analisar Pasta</button>
-    <div id="status"></div>
-    <div id="results"></div>
+    <div id="controls">
+        <h1>Mordomo Digital</h1>
+        <button id="scan-btn">🔍 Analisar Pasta</button>
+        <div id="status"></div>
+    </div>
+
+    <div id="output">
+        <h2>Resumo da Pasta</h2>
+        <div id="summary">Selecione uma pasta para ver o resumo.</div>
+        
+        <h2>Duplicados Encontrados</h2>
+        <div id="results"></div>
+    </div>
+
     <script src="./renderer.js"></script>
 </body>
 </html>
