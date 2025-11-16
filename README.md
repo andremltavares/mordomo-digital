@@ -2,41 +2,39 @@
 
 A desktop application built with Electron and Python to help you find duplicates, categorize files, and clean up your digital clutter.
 
-## ✨ Current Features (Phase 2)
+## ✨ Current Features
 
-This app can currently scan any local folder on your computer and provide a complete analysis, including:
+The app now supports both local and cloud analysis.
 
-* **Duplicate File Finder:** Scans the folder and identifies 100% identical files using MD5 hashing, regardless of their filenames.
-* **Folder Summary:** Provides a quick overview of the selected folder, including:
-    * Total file count
-    * Total folder size (e.g., GB, MB)
-* **File Categorization:** Breaks down all files into clear categories so you know what you have:
-    * Images
-    * Documents
-    * Videos
-    * Music
-    * Compressed (.zip, .rar)
-    * ...and more.
+### Local Analysis (Phase 2)
+* **Duplicate File Finder:** Scans any local folder and identifies 100% identical files using MD5 hashing.
+* **Folder Summary:** Provides a quick overview of the selected folder (total files, total size).
+* **File Categorization:** Breaks down files into categories (Images, Documents, Videos, etc.).
+
+### Cloud Integration (Phase 3)
+* **Google Drive Connection:** Securely authenticates with Google Drive using OAuth 2.0.
+* **File Listing:** Can fetch and display a list of files from the user's Google Drive.
 
 ## 🛠️ Tech Stack
 
 * **Frontend (UI):** [Electron](https://www.electronjs.org/) (JavaScript, HTML, CSS)
 * **Backend (Logic):** [Python](https://www.python.org/)
+* **APIs:** [Google Drive API](https://developers.google.com/drive)
 * **Bridge:** Node.js `child_process` to run Python scripts securely.
 
 ## 🗺️ Future Roadmap (The Plan)
 
-The goal is to build a truly smart digital assistant. The next planned phases are:
+The next planned phases are:
 
-* **Phase 3: Cloud Integration**
-    * Connect to Google Drive (and later, Dropbox/OneDrive).
-    * Find duplicates *between* your local files and your cloud storage.
-* **Phase 4: AI Organization**
+* **Phase 4: AI Organization & Cross-Comparison**
+    * Compare local and cloud files to find cross-platform duplicates.
     * Use AI (NLP/OCR) to read file contents.
     * Automatically suggest "Smart Folders" (e.g., "Move all 2024 invoices to /Finances/2024").
 
 ## 🖥️ How to Run (Development)
 
 1.  Clone this repository.
-2.  Install dependencies: `npm install`
-3.  Run the app: `npm start`
+2.  Install Node.js dependencies: `npm install`
+3.  Install Python dependencies: `pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib`
+4.  Set up your `credentials.json` from the Google Cloud Console.
+5.  Run the app: `npm start`
