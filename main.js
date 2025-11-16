@@ -92,3 +92,37 @@ ipcMain.handle('google:login', async () => {
         });
     });
 });
+
+// OUVINTE: Isto fica à espera que o renderer.js chame 'scan:drive'
+ipcMain.handle('scan:drive', async () => {
+    // Chamar o script Python 'drive_api.py'
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('python', [
+            path.join(__dirname, 'backend', 'drive_api.py')
+        ]);
+
+        let output = ''; 
+        let errorOutput = ''; 
+
+        pythonProcess.stdout.on('data', (data) => {
+            output += data.toString(); // Juntar todos os outputs
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            errorOutput += data.toString();
+        });
+
+        pythonProcess.on('close', (code) => {
+            if (code !== 0) {
+                return reject(new Error(`Erro no script Python: ${errorOutput}`));
+            }
+            try {
+                // Tenta converter o output em JSON
+                const jsonData = JSON.parse(output);
+                resolve(jsonData);
+            } catch (parseError) {
+                reject(new Error(`Erro ao processar o resultado do Python: ${parseError.message} | Output: ${output}`));
+            }
+        });
+    });
+});

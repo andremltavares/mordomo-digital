@@ -8,6 +8,8 @@
         #controls { min-width: 250px; }
         #output { flex-grow: 1; }
         button { font-size: 16px; padding: 10px; margin-top: 10px; width: 100%; }
+        /* Estilo para botões desativados */
+        button:disabled { background-color: #ccc; cursor: not-allowed; } 
         h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; }
         #summary, #results { 
             white-space: pre-wrap; 
@@ -22,18 +24,19 @@
     <div id="controls">
         <h1>Mordomo Digital</h1>
         
-        <h2>Análise Local</h2>
-        <button id="scan-btn">🔍 Analisar Pasta</button>
-        <div id="status"></div>
-        
         <h2>Conexões</h2>
         <button id="login-btn">Ligar ao Google Drive</button>
         <div id="gdrive-status"></div>
+        
+        <h2>Análise</h2>
+        <button id="scan-btn">🔍 Analisar Pasta Local</button>
+        <button id="scan-drive-btn" disabled>☁️ Analisar Google Drive</button>
+        <div id="status"></div>
     </div>
 
     <div id="output">
-        <h2>Resumo da Pasta</h2>
-        <div id="summary">Selecione uma pasta para ver o resumo.</div>
+        <h2>Resumo da Análise</h2>
+        <div id="summary">Selecione uma pasta ou drive para ver o resumo.</div>
         
         <h2>Duplicados Encontrados</h2>
         <div id="results"></div>
