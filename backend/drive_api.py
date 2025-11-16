@@ -8,7 +8,7 @@ from googleapiclient.discovery import build # Importante para construir o servi�
 # --- CONFIGURAÇÃO ---
 # O token que o auth.py criou
 TOKEN_FILE = os.path.join(os.path.dirname(__file__), 'token.json')
-# As permissões que pedimos
+# As permissões pedidas
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 # --------------------
 
@@ -18,7 +18,7 @@ def get_drive_service():
     if os.path.exists(TOKEN_FILE):
         creds = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
     
-    # Se o token não existir ou tiver expirado (não deve acontecer agora)
+    # Se o token não existir ou tiver expirado
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())

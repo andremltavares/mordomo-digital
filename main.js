@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process'); // Para chamar o Python
 
-// 1. CÓDIGO PARA CRIAR A JANELA (Faltava-lhe isto)
+// 1. CÓDIGO PARA CRIAR A JANELA 
 function createWindow() {
     const win = new BrowserWindow({
         width: 800,
@@ -15,10 +15,10 @@ function createWindow() {
     win.loadFile('index.html');
 }
 
-// 2. CÓDIGO QUE ARRANCA A APP (Faltava-lhe isto)
+// 2. CÓDIGO QUE ARRANCA A APP
 app.whenReady().then(createWindow);
 
-// 3. OUVINTE PARA O SCAN DE PASTAS (O seu código original)
+// 3.  SCAN DE PASTAS
 ipcMain.handle('scan:folder', async () => {
     // 1. Abrir o seletor de pastas
     const { canceled, filePaths } = await dialog.showOpenDialog({
@@ -64,7 +64,7 @@ ipcMain.handle('scan:folder', async () => {
 });
 
 
-// 4. OUVINTE PARA O LOGIN DO GOOGLE (O seu código novo)
+// 4.  LOGIN DO GOOGLE
 ipcMain.handle('google:login', async () => {
     // Chamar o script Python 'auth.py'
     return new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ ipcMain.handle('google:login', async () => {
     });
 });
 
-// OUVINTE: Isto fica à espera que o renderer.js chame 'scan:drive'
+// Isto fica à espera que o renderer.js chame 'scan:drive'
 ipcMain.handle('scan:drive', async () => {
     // Chamar o script Python 'drive_api.py'
     return new Promise((resolve, reject) => {

@@ -67,7 +67,7 @@ loginBtn.addEventListener('click', async () => {
         if (result === 'AUTH_SUCCESS') {
             gdriveStatusDiv.innerText = 'Conectado ao Google Drive!';
             loginBtn.innerText = 'Conectado';
-            scanDriveBtn.disabled = false; // <-- NOVO: ATIVA O BOTÃO DE SCAN
+            scanDriveBtn.disabled = false;
         } else {
             gdriveStatusDiv.innerText = `Erro: ${result}`;
             loginBtn.disabled = false;
@@ -88,7 +88,7 @@ scanDriveBtn.addEventListener('click', async () => {
     resultsDiv.innerText = '';
 
     try {
-        // Chama a função 'scan:drive' que criámos
+        // Chama a função 'scan:drive'
         const driveData = await window.api.scanDrive();
         
         if (driveData.error) {
