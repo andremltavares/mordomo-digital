@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process'); // Para chamar o Python
 
+// 1. CÓDIGO PARA CRIAR A JANELA (Faltava-lhe isto)
 function createWindow() {
     const win = new BrowserWindow({
         width: 800,
@@ -14,9 +15,10 @@ function createWindow() {
     win.loadFile('index.html');
 }
 
+// 2. CÓDIGO QUE ARRANCA A APP (Faltava-lhe isto)
 app.whenReady().then(createWindow);
 
-//fica à espera que o renderer.js chame 'scan:folder'
+// 3. OUVINTE PARA O SCAN DE PASTAS (O seu código original)
 ipcMain.handle('scan:folder', async () => {
     // 1. Abrir o seletor de pastas
     const { canceled, filePaths } = await dialog.showOpenDialog({
@@ -29,7 +31,7 @@ ipcMain.handle('scan:folder', async () => {
 
     const folderPath = filePaths[0];
 
-    // 2. Chamar o script Python (num processo-filho)
+    // 2. Chamar o script Python 'scan.py'
     return new Promise((resolve, reject) => {
         const pythonProcess = spawn('python', [
             path.join(__dirname, 'backend', 'scan.py'),
@@ -57,6 +59,36 @@ ipcMain.handle('scan:folder', async () => {
             } catch (parseError) {
                 reject(new Error(`Erro ao processar o resultado do Python: ${parseError.message} | Output: ${output}`));
             }
+        });
+    });
+});
+
+
+// 4. OUVINTE PARA O LOGIN DO GOOGLE (O seu código novo)
+ipcMain.handle('google:login', async () => {
+    // Chamar o script Python 'auth.py'
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('python', [
+            path.join(__dirname, 'backend', 'auth.py')
+        ]);
+
+        let output = ''; 
+        let errorOutput = ''; 
+
+        pythonProcess.stdout.on('data', (data) => {
+            output += data.toString().trim(); // .trim() é importante
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            errorOutput += data.toString();
+        });
+
+        pythonProcess.on('close', (code) => {
+            if (code !== 0) {
+                return reject(new Error(`Erro no script Python: ${errorOutput}`));
+            }
+            // Devolve o output (ex: "AUTH_SUCCESS")
+            resolve(output);
         });
     });
 });
